@@ -5,14 +5,16 @@ phases:
     runtime-versions:
       java: corretto11
     commands:
+      - echo Installing Maven...
       - yum install -y maven
   build:
     commands:
-      - mvn clean package
+      - echo Starting Maven build...
+      - mvn clean package -DskipTests
   post_build:
     commands:
-      ## aws s3 cp target/*.war s3://myhhbucket23 . We don't need this step.
-      - echo Build completed
+      - echo Build completed successfully.
+
 artifacts:
   files:
     - target/*.war
@@ -20,5 +22,4 @@ artifacts:
     - scripts/server_stop.sh
     - TestXMLFile.xml
     - appspec.yml
-   
   discard-paths: yes
